@@ -243,20 +243,26 @@
                                         <?php if ($page['file_editor']) echo '<a href="javascript:;" id="editThis" class="btn">Edit this page</a>'; ?>                                    </h1>
                                 </div>
                             <?php } ?>
-
+                            <div class="page-content">
                             <?php echo $page['content']; ?>
-                            <?php if ($page['file_editor']) { ?>
+                            </div>
+                            <?php if ($page['file_editor']) : ?>
                                 <div class="editor<?php if(!$params['date_modified']) echo ' paddingTop'; ?>">
-                                    <h3>You are editing <?php echo $page['path']; ?>&nbsp;<a href="javascript:;" class="closeEditor btn btn-warning">Close</a></h3>
+                                    <h3>You are editing <?php echo $page['path']; ?>&nbsp;</h3>
                                     <div class="navbar navbar-inverse navbar-default navbar-fixed-bottom" role="navigation">
                                         <div class="navbar-inner">
-                                            <a href="javascript:;" class="save_editor btn btn-primary navbar-btn pull-right">Save file</a>
+                                            <a href="javascript:;" class="save_editor btn btn-primary navbar-btn pull-right">Save file</a>&nbsp;
+                                            <a href="javascript:;" class="closeEditor btn btn-warning navbar-btn pull-right">Close</a>
                                         </div>
                                     </div>
-                                    <textarea id="markdown_editor"><?php echo $page['markdown'];?></textarea>
+                                    <textarea class="hidden" id="markdown-content"><?php echo $page['markdown'];?></textarea>
+                                    <div id="markdown-menu" class="toolbar"></div>
+                                    <div id="markdown-editor" class="demarcate-page"></div>
                                     <div class="clearfix"></div>
                                 </div>
-                            <?php } ?>
+                            <?php else : ?>
+
+                            <?php endif; ?>
                         </article>
                     </div>
                 </div>
@@ -288,7 +294,12 @@
     <?php foreach ($page['theme']['js'] as $js) echo '<script src="' . $js . '"></script>'; ?>
 
     <!-- Front end file editor -->
-    <?php if ($page['file_editor']) echo '<script src="'. $base_url. 'js/editor.js"></script>'; ?>
+    <?php if ($page['file_editor']) {
+        // echo '<script src="'. $base_url. 'js/editor.js"></script>';
+        echo '<script src="'. $base_url. 'js/demarcate.js"></script>';
+        echo '<script src="'. $base_url. 'js/demarcate-editor.js"></script>';
+    }
+    ?>
     <script src="<?php echo $base_url; ?>js/custom.js"></script>
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
